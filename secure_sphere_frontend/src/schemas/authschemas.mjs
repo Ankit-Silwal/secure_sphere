@@ -2,6 +2,10 @@ import mongoose from "mongoose";
 import bcrypt from "bcrypt"
 const authSchemas = mongoose.Schema(
   {
+    isverified:{
+      type:Boolean,
+      required:false
+    },
     username: {
       type: String,
       required: true,
@@ -25,14 +29,13 @@ const authSchemas = mongoose.Schema(
     timestamps: true,
   }
 );
-authSchemas.pre("save",async function (next){
-  if(!this.isModified("password")){
-    return next();
+authSchemas.pre("save", async function () {
+  if (!this.isModified("password")) {
+    return;
   }
-  const saltRounds=10
-  this.password=await bcrypt.hash(this.password,saltRounds)
-  next();
-})
+  const saltRounds = 10;
+  this.password = await bcrypt.hash(this.password, saltRounds);
+});
 authSchemas.method.comparePassword=async function (enteredPassword){
   return bcrypt.compare(enteredPassword,this.password)
 }
