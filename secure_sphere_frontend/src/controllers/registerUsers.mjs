@@ -1,4 +1,7 @@
 import auth from "../schemas/authschemas.mjs";
+import { createAndStoreOtp } from "../utils/otpService.js";
+import { sendOtpEmail } from "../utils/sendOtpEmail.js";
+
 export const registerUsers = async (req, res) => {
   const { username, email, password } = req.body;
   const duplicateUser = await auth.findOne({ email });
@@ -20,6 +23,8 @@ export const registerUsers = async (req, res) => {
       email,
       password,
     });
+    const otp = await createAndStoreOtp(newUser._id.toString());
+    await sendOtpEmail({ to: newUser.email, otp });
     return res.status(201).json({
       success: true,
       message: "User registered successfully",
