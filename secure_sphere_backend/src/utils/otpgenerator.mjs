@@ -11,24 +11,27 @@ function generatenumberOTP(digits=OTP_DIIGITS){
 export async function createandstoreOtp(userId){
   const otp=generatenumberOTP();
   const key=`verify:otp:${userId}`
-  await redisClient.set(key,otp,{EX: OTP_TILL_SECONDS})
+  await redisClient.set(key, otp, { EX: OTP_TILL_SECONDS })
+  console.log(`OTP stored for ${userId}: expires in ${OTP_TILL_SECONDS}s`);
   return otp;
 }
 
 export async function verifyandconsumeOtp(userId,submittedOtp){
   const key=`verify:otp:${userId}`
   const stored=await redisClient.get(key);
+  console.log(`Checking OTP for ${userId}: stored=${stored}, submitted=${submittedOtp}`);
   if(!stored){
+    console.log(`OTP expired or missing for key: ${key}`);
     return {
       success:false,
       message:"expired or missing"
     }
   }
-  if(stored!=String(submittedOtp)) return{
+  if(stored !== String(submittedOtp)) return{
     success:false,
     message:"You passed the wrong otp"
   }
-  await redisClient.delete(key);
+  await redisClient.del(key);
   return {
     success:true,
     message:"You are verified"

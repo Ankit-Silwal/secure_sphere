@@ -28,13 +28,10 @@ export const verifyEmail = async (req, res) => {
 
   const result = await verifyandconsumeOtp(user._id.toString(), otp);
 
-  if (!result.ok) {
+  if (!result.success) {
     return res.status(400).json({
       success: false,
-      message:
-        result.reason === "expired_or_missing"
-          ? "OTP has expired or doesn't exist"
-          : "Invalid OTP"
+      message: result.message
     });
   }
 
