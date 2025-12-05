@@ -6,14 +6,14 @@ export const loginUser=async (req,res)=>{
   if(!email || !password ){
     return res.status(400).json({
       success:false,
-      msg:"Both Email and Password are required"
+      message:"Both Email and Password are required"
     })
   }
   const user=await auth.findOne({email})
   if(!user){
     return res.status(404).json({
       success:false,
-      msg:"User not found please register first"
+      message:"User not found please register first"
     })
   }
 
@@ -29,7 +29,7 @@ export const loginUser=async (req,res)=>{
   if(!isMatch){
     return res.status(401).json({
       success:false,
-      msg:"The password is incorrect"
+      message:"The password is incorrect"
     })
   }
 

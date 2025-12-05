@@ -12,7 +12,7 @@ const app=express()
 app.use(express.json())
 app.get("/", (req, res) => {
   res.json({
-    msg:"The server is running"
+    message:"The server is running"
   });
 });
 app.use("/api/auth",router)
