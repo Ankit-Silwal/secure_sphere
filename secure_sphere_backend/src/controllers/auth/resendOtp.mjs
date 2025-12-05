@@ -1,7 +1,7 @@
-import auth from "../schemas/authschemas.mjs";
-import { createandstoreOtp } from "../utils/otpgenerator.mjs";
-import { sendOtp } from "../utils/sendotpemail.mjs";
-import { redisClient } from "../configs/redis.mjs";
+import auth from "../../schemas/authschemas.mjs";
+import { createandstoreOtp } from "../../utils/otp/otpgenerator.mjs";
+import { sendOtp } from "../../utils/email/sendotpemail.mjs";
+import { redisClient } from "../../configs/redis.mjs";
 
 export const resendOtp = async (req, res) => {
   const { email } = req.body;

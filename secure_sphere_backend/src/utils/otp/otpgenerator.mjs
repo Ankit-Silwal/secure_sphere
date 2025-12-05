@@ -1,5 +1,5 @@
 import { randomInt } from "crypto";
-import { redisClient } from "../configs/redis.mjs";
+import { redisClient } from "../../configs/redis.mjs";
 const OTP_TILL_SECONDS=300
 const OTP_DIIGITS=6
 function generatenumberOTP(digits=OTP_DIIGITS){

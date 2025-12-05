@@ -1,5 +1,5 @@
-import auth from "../schemas/authschemas.mjs";
-import { verifyandconsumeOtp } from "../utils/otpgenerator.mjs";
+import auth from "../../schemas/authschemas.mjs";
+import { verifyandconsumeOtp } from "../../utils/otp/otpgenerator.mjs";
 
 export const verifyEmail = async (req, res) => {
   const { email, otp } = req.body;

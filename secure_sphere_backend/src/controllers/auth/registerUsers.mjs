@@ -1,6 +1,6 @@
-import auth from "../schemas/authschemas.mjs";
-import { createandstoreOtp } from "../utils/otpgenerator.mjs";
-import { sendOtp } from "../utils/sendotpemail.mjs";
+import auth from "../../schemas/authschemas.mjs";
+import { createandstoreOtp } from "../../utils/otp/otpgenerator.mjs";
+import { sendOtp } from "../../utils/email/sendotpemail.mjs";
 
 export const registerUsers = async (req, res) => {
   const { username, email, password } = req.body;

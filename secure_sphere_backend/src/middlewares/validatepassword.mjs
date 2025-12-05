@@ -1,4 +1,4 @@
-import { validatePassword } from "../utils/validatePassword.mjs";
+import { validatePassword } from "../utils/validators/validatePassword.mjs";
 
 export function passwordValidatorMiddleware(req, res, next) {
   const { password, email, username } = req.body;
