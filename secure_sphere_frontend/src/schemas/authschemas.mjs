@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import bcrypt from "bcrypt"
 const authSchemas = mongoose.Schema(
   {
-    isverified:{
+    isVerified:{
       type:Boolean,
       required:false
     },
