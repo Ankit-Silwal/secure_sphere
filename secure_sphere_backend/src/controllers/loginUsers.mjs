@@ -1,5 +1,6 @@
 import auth from "../schemas/authschemas.mjs";
 import bcrypt from "bcrypt"
+import { createSession } from "../utils/session/sessionManager.mjs";
  
 export const loginUser=async (req,res)=>{
   const {email,password}=req.body;
@@ -32,7 +33,14 @@ export const loginUser=async (req,res)=>{
       message:"The password is incorrect"
     })
   }
-
+  const sessionId=await createSession(user._id,req)
+  res.cookie('sessionId',sessionId,{
+    httpOnly:true,
+    secure:process.env.NODE_ENV==="production",
+    samesite:"strict",
+    maxAge:24*60*60
+  })
+  
   return res.status(200).json({
     success:true,
     message:"Login successful",

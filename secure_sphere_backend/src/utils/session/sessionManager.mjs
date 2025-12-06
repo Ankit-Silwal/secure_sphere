@@ -11,9 +11,9 @@ export async function createSession(userId,req){
   const sessionData={
     userId:userId.toString(),
     createdAt:new Date().toISOString,
-    expiredAt:new Date()(Date.now()+session_TTL*1000).toISOString(),
+    expiredAt:new Date(Date.now()+session_TTL*1000).toISOString(),
     ip:req.ip || req.connection.remoteAddress || "unknown",
-    userAgent:userId.get('user-agent') || "unknown"
+    userAgent:req.get('user-agent') || "unknown"
   }
 
   const sessionKey=`session:${sessionId}`
@@ -43,7 +43,7 @@ export async function getSession(sessionId){
   return JSON.parse(sessionData)
 }
 
-export async function deleteSession(sessonId){
+export async function deleteSession(sessionId){
   if(!sessionId){
     return false
   }
@@ -57,8 +57,29 @@ export async function deleteSession(sessonId){
   const result=await redisClient.del(sessionKey)
 
   if(result>0){
-    console.log(`Session deleted :${sessonId}`)
+    console.log(`Session deleted :${sessionId}`)
     return true
   }
   return false
+}
+export async function deleteAllUserSessions(userId) {
+  const userSessionsKey = `user:sessions:${userId}`;
+
+  const sessionIds = await redisClient.sMembers(userSessionsKey);
+
+  if (!sessionIds || sessionIds.length === 0) {
+    return 0;
+  }
+  let deletedCount = 0;
+  for (const sessionId of sessionIds) {
+    const sessionKey = `session:${sessionId}`;
+    const result = await redisClient.del(sessionKey);
+    if (result > 0) {
+      deletedCount++;
+    }
+  }
+  await redisClient.del(userSessionsKey);
+
+  console.log(`Deleted ${deletedCount} sessions for user ${userId}`);
+  return deletedCount;
 }
