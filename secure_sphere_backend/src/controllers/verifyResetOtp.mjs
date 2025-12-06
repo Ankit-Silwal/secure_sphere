@@ -22,18 +22,15 @@ export const verifyResetOtp = async (req, res) => {
 
   const result = await verifyAndConsumeResetOtp(user._id.toString(), otp);
 
-  if (!result.ok) {
+  if (!result.success) {
     return res.status(400).json({
       success: false,
-      message:
-        result.reason === "expired_or_missing"
-          ? "OTP has expired or does not exist"
-          : "Invalid OTP",
+      message: result.message
     });
   }
 
   const verifiedKey = `reset:verified:${user._id}`;
-  await redisClient.set(verifiedKey, "true", "EX", 300);
+  await redisClient.set(verifiedKey, "true", { EX: 300 });
 
   return res.status(200).json({
     success: true,

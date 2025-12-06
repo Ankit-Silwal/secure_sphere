@@ -1,3 +1,8 @@
+import auth from "../schemas/authschemas.mjs";
+import { redisClient } from "../configs/redis.mjs";
+import { createAndStoreResetOtp } from "../utils/otp/resetotpservice.mjs";
+import { sendResetEmail } from "../utils/email/sendResetEmail.mjs";
+
 export const forgotPassword = async (req, res) => {
   const { email } = req.body;
 
@@ -38,7 +43,7 @@ export const forgotPassword = async (req, res) => {
   }
 
   const otp = await createAndStoreResetOtp(user._id.toString());
-  await sendResetOtpEmail({ to: user.email, otp });
+  await sendResetEmail({ to: user.email, otp });
 
   return res.status(200).json({
     success: true,

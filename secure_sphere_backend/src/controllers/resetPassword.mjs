@@ -3,12 +3,12 @@ import bcrypt from "bcrypt";
 import { redisClient } from "../configs/redis.mjs";
 
 export const resetPassword = async (req, res) => {
-  const { email, newPassword } = req.body;
+  const { email, password } = req.body;
 
-  if (!email || !newPassword) {
+  if (!email || !password) {
     return res.status(400).json({
       success: false,
-      message: "Email and new password are required",
+      message: "Email and password are required",
     });
   }
 
@@ -31,7 +31,7 @@ export const resetPassword = async (req, res) => {
     });
   }
 
-  const isSame = await bcrypt.compare(newPassword, user.password);
+  const isSame = await bcrypt.compare(password, user.password);
   if (isSame) {
     return res.status(400).json({
       success: false,
@@ -39,10 +39,10 @@ export const resetPassword = async (req, res) => {
     });
   }
 
-  const hashedPassword = await bcrypt.hash(newPassword, 10);
-  user.password = hashedPassword;
+  user.password = password;
 
   await user.save();
+  console.log("✓ Password reset successfully for:", email);
   await redisClient.del(verifiedKey);
 
   return res.status(200).json({
