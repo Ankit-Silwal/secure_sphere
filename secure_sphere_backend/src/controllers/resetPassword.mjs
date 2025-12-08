@@ -1,6 +1,7 @@
 import auth from "../schemas/authschemas.mjs";
 import bcrypt from "bcrypt";
 import { redisClient } from "../configs/redis.mjs";
+import { deleteAllUserSessions } from "../utils/session/sessionManager.mjs";
 
 export const resetPassword = async (req, res) => {
   const { email, password } = req.body;
@@ -42,8 +43,11 @@ export const resetPassword = async (req, res) => {
   user.password = password;
 
   await user.save();
-  console.log("✓ Password reset successfully for:", email);
+  console.log("Password reset successfully for:", email);
   await redisClient.del(verifiedKey);
+  await deleteAllUserSessions(user._id.toString());
+  console.log("All sessions invalidated for user:", email);
+
 
   return res.status(200).json({
     success: true,
