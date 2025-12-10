@@ -38,8 +38,8 @@ export const loginUser=async (req,res)=>{
   res.cookie('sessionId',sessionId,{
     httpOnly:true,
     secure:process.env.NODE_ENV==="production",
-    samesite:"strict",
-    maxAge:24*60*60
+    sameSite:"strict",
+    maxAge:24*60*60*1000
   })
   await logActivity(user._id, "USER_LOGIN", req);
   

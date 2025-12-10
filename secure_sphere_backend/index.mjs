@@ -4,7 +4,7 @@ import connectDB from "./src/configs/db.mjs"
 import { initRedis } from "./src/configs/redis.mjs"
 import router from "./src/routes/auth.mjs"
 import cookieParser from "cookie-parser"
-import actrouter from "./src/routes/activity.mjs"
+import actrouter from "./src/routes/user.mjs"
 configDotenv()
 const PORT=process.env.PORT
 connectDB()
@@ -18,7 +18,7 @@ app.get("/", (req, res) => {
   });
 });
 app.use("/api/auth",router)
-app.use("/user",actrouter)
+app.use("/api/user",actrouter)
 app.listen(PORT,()=>{
   console.log(`The server begun at  http://localhost/${PORT}`)
 })
