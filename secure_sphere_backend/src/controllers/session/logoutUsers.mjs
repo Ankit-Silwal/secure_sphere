@@ -1,5 +1,5 @@
-import { deleteSession, getSession } from "../utils/session/sessionManager.mjs";
-import { logActivity } from "../logs/logActivity.mjs";
+import { deleteSession, getSession } from "../../utils/session/sessionManager.mjs";
+import { logActivity } from "../../logs/logActivity.mjs";
 export const logoutUser=async (req,res)=>{
   try{
     const sessionId=req.cookies.sessionId;

@@ -1,8 +1,8 @@
-import auth from "../schemas/authschemas.mjs";
+import auth from "../../schemas/authschemas.mjs";
 import bcrypt from "bcrypt";
-import { redisClient } from "../configs/redis.mjs";
-import { deleteAllUserSessions } from "../utils/session/sessionManager.mjs";
-import { logActivity } from "../logs/logActivity.mjs";
+import { redisClient } from "../../configs/redis.mjs";
+import { deleteAllUserSessions } from "../../utils/session/sessionManager.mjs";
+import { logActivity } from "../../logs/logActivity.mjs";
 
 export const resetPassword = async (req, res) => {
   const { email, password } = req.body;

@@ -1,8 +1,8 @@
-import auth from "../schemas/authschemas.mjs";
-import { redisClient } from "../configs/redis.mjs";
-import { createAndStoreResetOtp } from "../utils/otp/resetotpservice.mjs";
-import { sendResetEmail } from "../utils/email/sendResetEmail.mjs";
-import { logActivity } from "../logs/logActivity.mjs";
+import auth from "../../schemas/authschemas.mjs";
+import { redisClient } from "../../configs/redis.mjs";
+import { createAndStoreResetOtp } from "../../utils/otp/resetotpservice.mjs";
+import { sendResetEmail } from "../../utils/email/sendResetEmail.mjs";
+import { logActivity } from "../../logs/logActivity.mjs";
 
 export const forgotPassword = async (req, res) => {
   const { email } = req.body;

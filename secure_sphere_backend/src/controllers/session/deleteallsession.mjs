@@ -1,5 +1,5 @@
-import { deleteAllUserSessions, getSession } from "../utils/session/sessionManager.mjs";
-import { logActivity } from "../logs/logActivity.mjs";
+import { deleteAllUserSessions, getSession } from "../../utils/session/sessionManager.mjs";
+import { logActivity } from "../../logs/logActivity.mjs";
 
 export const deleteAllSessions = async (req, res) => {
   try {

@@ -1,7 +1,7 @@
-import auth from "../schemas/authschemas.mjs";
+import auth from "../../schemas/authschemas.mjs";
 import bcrypt from "bcrypt"
-import { createSession } from "../utils/session/sessionManager.mjs";
-import { logActivity } from "../logs/logActivity.mjs";
+import { createSession } from "../../utils/session/sessionManager.mjs";
+import { logActivity } from "../../logs/logActivity.mjs";
  
 export const loginUser=async (req,res)=>{
   const {email,password}=req.body;

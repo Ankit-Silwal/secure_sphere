@@ -1,6 +1,6 @@
-import auth from "../schemas/authschemas.mjs";
-import { redisClient } from "../configs/redis.mjs";
-import { verifyAndConsumeResetOtp } from "../utils/otp/resetotpservice.mjs";
+import auth from "../../schemas/authschemas.mjs";
+import { redisClient } from "../../configs/redis.mjs";
+import { verifyAndConsumeResetOtp } from "../../utils/otp/resetotpservice.mjs";
 
 export const verifyResetOtp = async (req, res) => {
   const { email, otp } = req.body;

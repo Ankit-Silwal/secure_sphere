@@ -1,4 +1,4 @@
-import { getUserSessions, getSession } from "../utils/session/sessionManager.mjs";
+import { getUserSessions, getSession } from "../../utils/session/sessionManager.mjs";
 export const getActiveSessions = async (req, res) => {
   try {
     const sessionId = req.cookies.sessionId;
