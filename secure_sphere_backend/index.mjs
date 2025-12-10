@@ -18,7 +18,7 @@ app.get("/", (req, res) => {
   });
 });
 app.use("/api/auth",router)
-app.use("/api",actrouter)
+app.use("/user",actrouter)
 app.listen(PORT,()=>{
   console.log(`The server begun at  http://localhost/${PORT}`)
 })
