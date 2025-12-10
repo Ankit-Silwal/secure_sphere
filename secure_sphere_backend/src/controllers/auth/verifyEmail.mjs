@@ -1,5 +1,6 @@
 import auth from "../../schemas/authschemas.mjs";
 import { verifyandconsumeOtp } from "../../utils/otp/otpgenerator.mjs";
+import { logActivity } from "../../logs/logActivity.mjs";
 
 export const verifyEmail = async (req, res) => {
   const { email, otp } = req.body;
@@ -37,6 +38,7 @@ export const verifyEmail = async (req, res) => {
 
   user.isVerified = true;
   await user.save();
+  await logActivity(user._id, "EMAIL_VERIFIED", req);
 
   return res.status(200).json({
     success: true,

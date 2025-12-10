@@ -1,6 +1,7 @@
 import auth from "../schemas/authschemas.mjs";
 import bcrypt from "bcrypt"
 import { createSession } from "../utils/session/sessionManager.mjs";
+import { logActivity } from "../logs/logActivity.mjs";
  
 export const loginUser=async (req,res)=>{
   const {email,password}=req.body;
@@ -40,6 +41,7 @@ export const loginUser=async (req,res)=>{
     samesite:"strict",
     maxAge:24*60*60
   })
+  await logActivity(user._id, "USER_LOGIN", req);
   
   return res.status(200).json({
     success:true,

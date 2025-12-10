@@ -1,4 +1,5 @@
 import { deleteAllUserSessions, getSession } from "../utils/session/sessionManager.mjs";
+import { logActivity } from "../logs/logActivity.mjs";
 
 export const deleteAllSessions = async (req, res) => {
   try {
@@ -23,6 +24,7 @@ export const deleteAllSessions = async (req, res) => {
     const userId = session.userId;
     
     const deletedCount = await deleteAllUserSessions(userId);
+    await logActivity(userId, "ALL_SESSIONS_DELETED", req);
 
     res.clearCookie('sessionId');
 
