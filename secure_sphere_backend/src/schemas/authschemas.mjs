@@ -25,6 +25,10 @@ const authSchemas = mongoose.Schema(
       enum: ["admin", "user"],
       default:"user",
     },
+    profilePicture: {
+      type: String,
+      default: null
+    }
   },
   {
     timestamps: true,
