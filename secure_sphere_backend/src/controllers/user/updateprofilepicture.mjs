@@ -1,7 +1,7 @@
 import auth from "../../schemas/authschemas.mjs";
 export const updateProfilePicture=async (req,res)=>{
   try{
-    const userId=req.user.user._id;
+    const userId=req.user.userId;
     const {filePath}=req.body;
     if(!filePath || typeof filePath!=="string"){
       return res.status(400).json({
@@ -9,9 +9,9 @@ export const updateProfilePicture=async (req,res)=>{
         message:"Invalid filepath"
       })
     }
-    const user=await auth.findbyId(userId);
+    const user=await auth.findById(userId);
     if(!user){
-      return res.status(400).json({
+      return res.status(404).json({
         success:false,
         message:"User not found"
       })
@@ -21,17 +21,18 @@ export const updateProfilePicture=async (req,res)=>{
     await user.save();
     return res.status(200).json({
       success:true,
-      message:"Profle picture has been updated successfully",
+      message:"Profile picture has been updated successfully",
       data:{
         filePath,
         oldPicture
       }
     })
   }catch(err){
-    console.log("Updated Profile Picture Error",err);
+    console.error("Updated Profile Picture Error:", err);
     return res.status(500).json({
       success:false,
-      message:"Internal server error."
+      message:"Internal server error",
+      error: err.message
     })
   }
 }
